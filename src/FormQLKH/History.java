@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -73,13 +75,14 @@ public class History extends JFrame {
 		model.addColumn("Lịch sử");
 		table.setModel(model);
 		JButton btnQuayLi = new JButton("Quay lại");
+		btnQuayLi.setForeground(new Color(0, 0, 0));
 		btnQuayLi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.setVisible(false);
 			}
 		});
-		btnQuayLi.setBorder(new LineBorder(new Color(0, 0, 0)));
-		btnQuayLi.setBackground(SystemColor.activeCaptionBorder);
+		btnQuayLi.setBorder(new LineBorder(Color.BLACK));
+		btnQuayLi.setBackground(Color.BLACK);
 		btnQuayLi.setBounds(326, 269, 89, 23);
 		contentPane.add(btnQuayLi);
 		JLabel lblBkg = new JLabel();
@@ -89,5 +92,18 @@ public class History extends JFrame {
 		btnQuayLi.setContentAreaFilled(false);
 		JTableHeader header1 = table.getTableHeader();
 		header1.setBackground(new Color(179, 115, 52, 200));
+		
+		btnQuayLi.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnQuayLi.setBounds(323, 266, 95, 29);
+				btnQuayLi.setBorder(new LineBorder(Color.BLACK, 2));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnQuayLi.setBounds(326, 269, 89, 23);
+				btnQuayLi.setBorder(new LineBorder(Color.BLACK, 1));
+			}
+		});
 	}
 }
