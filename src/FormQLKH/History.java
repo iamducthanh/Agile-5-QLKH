@@ -7,14 +7,15 @@ import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
@@ -51,13 +52,12 @@ public class History extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 340);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(0, 0, 51));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("L\u1ECBch s\u1EED");
-		lblNewLabel.setForeground(Color.WHITE);
+		lblNewLabel.setForeground(Color.BLUE);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 17));
 		lblNewLabel.setBounds(20, 11, 354, 28);
 		contentPane.add(lblNewLabel);
@@ -78,9 +78,16 @@ public class History extends JFrame {
 				frame.setVisible(false);
 			}
 		});
-		btnQuayLi.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+		btnQuayLi.setBorder(new LineBorder(new Color(0, 0, 0)));
 		btnQuayLi.setBackground(SystemColor.activeCaptionBorder);
 		btnQuayLi.setBounds(326, 269, 89, 23);
 		contentPane.add(btnQuayLi);
+		JLabel lblBkg = new JLabel();
+		lblBkg.setBounds(0, 0, 450, 340);
+		lblBkg.setIcon(new ImageIcon("src\\Image\\background.jpg"));
+		contentPane.add(lblBkg);
+		btnQuayLi.setContentAreaFilled(false);
+		JTableHeader header1 = table.getTableHeader();
+		header1.setBackground(new Color(179, 115, 52, 200));
 	}
 }

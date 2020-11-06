@@ -6,8 +6,9 @@ import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,13 +18,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.border.LineBorder;
 
 @SuppressWarnings("serial")
 public class QLKH extends JFrame {
@@ -158,6 +156,7 @@ public class QLKH extends JFrame {
 
 		JScrollPane scrollPaneFormTable = new JScrollPane();
 		scrollPaneFormTable.setBounds(10, 350, 567, 157);
+		scrollPaneFormTable.setBackground(new Color(0,0,0,0));
 		contentPane.add(scrollPaneFormTable);
 
 		table = new JTable();
@@ -237,7 +236,7 @@ public class QLKH extends JFrame {
 	
 	public void table() {
 		JTableHeader header = table.getTableHeader();
-		header.setBackground(Color.YELLOW);
+		header.setBackground(new Color(179, 115, 52, 200));
 		model.addColumn("Mã sản phẩm");
 		model.addColumn("Tên");
 		model.addColumn("Giá");
@@ -246,6 +245,7 @@ public class QLKH extends JFrame {
 		model.addColumn("Trạng thái");
 
 		table.setModel(model);
+		table.setBackground(Color.blue);
 	}
 	
 	public void image() {
