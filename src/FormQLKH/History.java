@@ -51,12 +51,13 @@ public class History extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 340);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(0, 0, 51));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("L\u1ECBch s\u1EED");
-		lblNewLabel.setForeground(Color.BLUE);
+		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 17));
 		lblNewLabel.setBounds(20, 11, 354, 28);
 		contentPane.add(lblNewLabel);

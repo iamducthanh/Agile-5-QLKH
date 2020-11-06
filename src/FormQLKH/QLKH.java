@@ -7,6 +7,7 @@ import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,9 +17,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.border.LineBorder;
 
 @SuppressWarnings("serial")
 public class QLKH extends JFrame {
@@ -145,21 +150,20 @@ public class QLKH extends JFrame {
 		textHanSuDung.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		textSoLuong.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		textTen.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		btnClear.setForeground(Color.BLACK);
 
 		btnClear.setBackground(SystemColor.activeCaptionBorder);
-		btnClear.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		btnClear.setBounds(468, 121, 89, 23);
 		contentPane.add(btnClear);
 
 		JScrollPane scrollPaneFormTable = new JScrollPane();
 		scrollPaneFormTable.setBounds(10, 350, 567, 157);
-		scrollPaneFormTable.setBackground(Color.red);
 		contentPane.add(scrollPaneFormTable);
 
 		table = new JTable();
 		scrollPaneFormTable.setViewportView(table);
+		btnAdd.setForeground(Color.BLACK);
 
-		btnAdd.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		btnAdd.setBackground(SystemColor.activeCaptionBorder);
 		btnAdd.setBounds(468, 159, 89, 23);
 		contentPane.add(btnAdd);
@@ -184,8 +188,22 @@ public class QLKH extends JFrame {
 		lblDanhSch.setBounds(10, 320, 272, 19);
 		contentPane.add(lblDanhSch);
 		
+		btnClear.setBorder(new LineBorder(new Color(64, 64, 64), 1));
+		btnAdd.setBorder(new LineBorder(Color.DARK_GRAY));
+		btnDelete.setBorder(new LineBorder(Color.DARK_GRAY));
+		btnHistory.setBorder(new LineBorder(Color.DARK_GRAY));
+		btnUpdate.setBorder(new LineBorder(Color.DARK_GRAY));
+		
+		btnClear.setContentAreaFilled(false);
+		btnHistory.setContentAreaFilled(false);
+		btnDelete.setContentAreaFilled(false);
+		btnUpdate.setContentAreaFilled(false);
+		btnAdd.setContentAreaFilled(false);
+
+		
 		table();
 		image();
+		hover();
 		
 		//action
 		
@@ -219,7 +237,7 @@ public class QLKH extends JFrame {
 	
 	public void table() {
 		JTableHeader header = table.getTableHeader();
-		header.setBackground(Color.LIGHT_GRAY);
+		header.setBackground(Color.YELLOW);
 		model.addColumn("Mã sản phẩm");
 		model.addColumn("Tên");
 		model.addColumn("Giá");
@@ -241,5 +259,73 @@ public class QLKH extends JFrame {
 		bkg.setIcon(new ImageIcon("src\\Image\\background.jpg"));
 		bkg.setBounds(0, 0, 601, 534);
 		contentPane.add(bkg);
+	}
+	
+	public void hover() {
+		btnClear.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {		
+				btnClear.setBounds(465, 118, 95, 29);
+				btnClear.setBorder(new LineBorder(new Color(64, 64, 64), 2));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnClear.setBounds(468, 121, 89, 23);
+				btnClear.setBorder(new LineBorder(new Color(64, 64, 64), 1));
+			}
+		});
+		
+		btnAdd.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {			
+				btnAdd.setBounds(465, 156, 95, 29);
+				btnAdd.setBorder(new LineBorder(new Color(64, 64, 64), 2));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnAdd.setBounds(468, 159, 89, 23);
+				btnAdd.setBorder(new LineBorder(new Color(64, 64, 64), 1));
+			}
+		});
+		
+		btnDelete.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnDelete.setBounds(465, 232, 95, 29);
+				btnDelete.setBorder(new LineBorder(new Color(64, 64, 64), 2));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnDelete.setBounds(468, 235, 89, 23);
+				btnDelete.setBorder(new LineBorder(new Color(64, 64, 64), 1));
+			}
+		});
+		
+		btnHistory.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnHistory.setBounds(465, 270, 95, 29);
+				btnHistory.setBorder(new LineBorder(new Color(64, 64, 64), 2));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnHistory.setBounds(468, 273, 89, 23);
+				btnHistory.setBorder(new LineBorder(new Color(64, 64, 64), 1));
+			}
+		});
+		
+		btnUpdate.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnUpdate.setBounds(465, 194, 95, 29);
+				btnUpdate.setBorder(new LineBorder(new Color(64, 64, 64), 2));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnUpdate.setBounds(468, 197, 89, 23);
+				btnUpdate.setBorder(new LineBorder(new Color(64, 64, 64), 1));
+			}
+		});
+		
 	}
 }
