@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeListener;
 
 import javax.swing.AbstractAction;
@@ -71,17 +73,18 @@ public class Login extends JFrame {
 		contentPane.setLayout(null);
 
 		textUsername = new JTextField(" Usename");
-		textUsername.setForeground(Color.WHITE);
-		textUsername.setBackground(new Color(0, 0, 0, 200));
+		textUsername.setForeground(Color.black);
+		textUsername.setBackground(Color.white);
 		textUsername.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		textUsername.setColumns(10);
 		textUsername.setBorder(new LineBorder(Color.WHITE));
 		textUsername.setBounds(145, 52, 205, 27);
+	
 		contentPane.add(textUsername);
 
 		textEmail = new JTextField(" Email");
-		textEmail.setForeground(Color.WHITE);
-		textEmail.setBackground(new Color(0, 0, 0, 200));
+		textEmail.setForeground(Color.black);
+		textEmail.setBackground(Color.white);
 		textEmail.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		textEmail.setColumns(10);
 		textEmail.setBorder(new LineBorder(Color.WHITE));
@@ -89,8 +92,8 @@ public class Login extends JFrame {
 		contentPane.add(textEmail);
 
 		textPassword = new JTextField();
-		textPassword.setForeground(Color.WHITE);
-		textPassword.setBackground(new Color(0, 0, 0, 200));
+		textPassword.setForeground(Color.black);
+		textPassword.setBackground(Color.white);
 		textPassword.setText(" Password");
 		textPassword.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		textPassword.setColumns(10);
@@ -99,20 +102,20 @@ public class Login extends JFrame {
 		contentPane.add(textPassword);
 
 		JLabel lblLogin = new JLabel("User Login");
-		lblLogin.setForeground(Color.WHITE);
+		lblLogin.setForeground(Color.BLUE);
 		lblLogin.setFont(new Font("Tahoma", Font.BOLD, 19));
 		lblLogin.setBounds(145, 11, 257, 40);
 		contentPane.add(lblLogin);
 
 		JButton btnLogin = new JButton("Login");
-		btnLogin.setForeground(Color.WHITE);
+		btnLogin.setForeground(Color.BLACK);
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				login();
 			}
 		});
-		btnLogin.setBorder(new LineBorder(new Color(255, 255, 255)));
-		btnLogin.setBackground(SystemColor.activeCaptionBorder);
+		btnLogin.setBorder(new LineBorder(Color.DARK_GRAY));
+		btnLogin.setBackground(Color.BLACK);
 		btnLogin.setBounds(144, 179, 89, 23);
 		contentPane.add(btnLogin);
 
@@ -178,6 +181,19 @@ public class Login extends JFrame {
 		textUsername.addActionListener(loginAction);
 		textPassword.addActionListener(loginAction);
 		textEmail.addActionListener(loginAction);
+		
+		btnLogin.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnLogin.setBounds(141, 176, 95, 29);
+				btnLogin.setBorder(new LineBorder(new Color(64, 64, 64), 2));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnLogin.setBounds(144, 179, 89, 23);
+				btnLogin.setBorder(new LineBorder(new Color(64, 64, 64), 1));
+			}
+		});
 
 	}
 	

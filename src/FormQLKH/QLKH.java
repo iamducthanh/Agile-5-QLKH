@@ -143,11 +143,6 @@ public class QLKH extends JFrame {
 		contentPane.add(textSoLuong);
 		text.start();
 
-		textMaSP.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		textGia.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		textHanSuDung.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		textSoLuong.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		textTen.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		btnClear.setForeground(Color.BLACK);
 
 		btnClear.setBackground(SystemColor.activeCaptionBorder);
@@ -167,17 +162,14 @@ public class QLKH extends JFrame {
 		btnAdd.setBounds(468, 159, 89, 23);
 		contentPane.add(btnAdd);
 
-		btnUpdate.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		btnUpdate.setBackground(SystemColor.activeCaptionBorder);
 		btnUpdate.setBounds(468, 197, 89, 23);
 		contentPane.add(btnUpdate);
 
-		btnDelete.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		btnDelete.setBackground(SystemColor.activeCaptionBorder);
 		btnDelete.setBounds(468, 235, 89, 23);
 		contentPane.add(btnDelete);
 
-		btnHistory.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		btnHistory.setBackground(SystemColor.activeCaptionBorder);
 		btnHistory.setBounds(468, 273, 89, 23);
 		contentPane.add(btnHistory);
@@ -198,6 +190,12 @@ public class QLKH extends JFrame {
 		btnDelete.setContentAreaFilled(false);
 		btnUpdate.setContentAreaFilled(false);
 		btnAdd.setContentAreaFilled(false);
+		
+		textGia.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		textHanSuDung.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		textMaSP.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		textSoLuong.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		textTen.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 
 		
 		table();
