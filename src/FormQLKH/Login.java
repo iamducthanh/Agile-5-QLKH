@@ -13,7 +13,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -294,7 +293,8 @@ public class Login extends JFrame {
 	public byte[] read() throws IOException {
 		FileInputStream fis;
 		try {
-			fis = new FileInputStream("C:\\Users\\ADMIN\\eclipse-workspace\\QLKH\\src\\File\\User.txt");
+			fis = new FileInputStream("src\\File\\User.txt");
+			@SuppressWarnings("unused")
 			int i = fis.read();
 			int n = fis.available();
 			byte[] chuoi = new byte[n];
@@ -312,7 +312,7 @@ public class Login extends JFrame {
 	
 	public static void write(byte[] chuoi) throws IOException {
 		try {
-			FileOutputStream fos = new FileOutputStream("C:\\Users\\ADMIN\\eclipse-workspace\\QLKH\\src\\File\\User.txt");
+			FileOutputStream fos = new FileOutputStream("src\\File\\User.txt");
 			fos.write(chuoi);
 			fos.close();
 		} catch (FileNotFoundException e) {

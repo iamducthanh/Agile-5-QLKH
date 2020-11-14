@@ -6,12 +6,9 @@ import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -253,14 +250,14 @@ public class QLKH extends JFrame {
 		textTen.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		btnOpen.setForeground(Color.BLACK);
 		
-		btnOpen.setIcon(new ImageIcon("C:\\Users\\ADMIN\\eclipse-workspace\\QLKH\\src\\Image\\open.png"));
+		btnOpen.setIcon(new ImageIcon("src\\Image\\open.png"));
 		btnOpen.setContentAreaFilled(false);
 		btnOpen.setBorder(new LineBorder(new Color(64, 64, 64)));
 		btnOpen.setBackground(SystemColor.activeCaptionBorder);
 		btnOpen.setBounds(567, 121, 89, 23);
 		contentPane.add(btnOpen);
 		
-		btnFind.setIcon(new ImageIcon("C:\\Users\\ADMIN\\eclipse-workspace\\QLKH\\src\\Image\\find.png"));
+		btnFind.setIcon(new ImageIcon("src\\Image\\find.png"));
 		btnFind.setForeground(Color.BLACK);
 		btnFind.setContentAreaFilled(false);
 		btnFind.setBorder(new LineBorder(new Color(64, 64, 64)));
@@ -269,7 +266,7 @@ public class QLKH extends JFrame {
 		contentPane.add(btnFind);
 		btnExit.setForeground(Color.BLACK);
 		
-		btnExit.setIcon(new ImageIcon("C:\\Users\\ADMIN\\eclipse-workspace\\QLKH\\src\\Image\\exit.png"));
+		btnExit.setIcon(new ImageIcon("src\\Image\\exit.png"));
 		btnExit.setContentAreaFilled(false);
 		btnExit.setBorder(new LineBorder(new Color(64, 64, 64)));
 		btnExit.setBackground(SystemColor.activeCaptionBorder);
