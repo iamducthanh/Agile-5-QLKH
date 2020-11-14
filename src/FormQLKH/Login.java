@@ -3,14 +3,17 @@ package FormQLKH;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.beans.PropertyChangeListener;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -24,16 +27,23 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+
 @SuppressWarnings("serial")
 public class Login extends JFrame {
-
 	private JPanel contentPane;
 	private JTextField textUsername;
-	private JTextField textEmail;
 	private JTextField textPassword;
+	private JTextField textComfirm;
 	static Login frame = new Login();
-	private String username = "agile5";
-	private String password = "agile5";
+	private String username = "";
+	private String password = "";
+	private byte[] user;
+	String userString = "";
+	JLabel lblChange = new JLabel();
+	String change = "Change password";
+	JButton btnChange = new JButton("Change");
+	JButton btnLogin = new JButton("Login");
+	StringBuilder error = new StringBuilder();
 
 	/**
 	 * Launch the application.
@@ -58,10 +68,11 @@ public class Login extends JFrame {
 	Action loginAction = new AbstractAction() {	
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
 			login();
 		}
 	};
+	private JButton btnCancel;
+	private JButton btnLoginChange;
 	
 	public Login() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -72,7 +83,7 @@ public class Login extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		textUsername = new JTextField(" Usename");
+		textUsername = new JTextField(" Username");
 		textUsername.setForeground(Color.black);
 		textUsername.setBackground(Color.white);
 		textUsername.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -81,15 +92,6 @@ public class Login extends JFrame {
 		textUsername.setBounds(145, 52, 205, 27);
 	
 		contentPane.add(textUsername);
-
-		textEmail = new JTextField(" Email");
-		textEmail.setForeground(Color.black);
-		textEmail.setBackground(Color.white);
-		textEmail.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		textEmail.setColumns(10);
-		textEmail.setBorder(new LineBorder(Color.WHITE));
-		textEmail.setBounds(145, 128, 205, 27);
-		contentPane.add(textEmail);
 
 		textPassword = new JTextField();
 		textPassword.setForeground(Color.black);
@@ -107,11 +109,13 @@ public class Login extends JFrame {
 		lblLogin.setBounds(145, 11, 257, 40);
 		contentPane.add(lblLogin);
 
-		JButton btnLogin = new JButton("Login");
 		btnLogin.setForeground(Color.BLACK);
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				login();
+				if(login()) {
+					QLKH qlkh = new QLKH();
+					qlkh.mainFrame();
+				}
 			}
 		});
 		btnLogin.setBorder(new LineBorder(Color.DARK_GRAY));
@@ -127,7 +131,7 @@ public class Login extends JFrame {
 		textUsername.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				if (textUsername.getText().equals(" Usename")) {
+				if (textUsername.getText().equals(" Username")) {
 					textUsername.setText("");
 				}
 			}
@@ -135,7 +139,7 @@ public class Login extends JFrame {
 			@Override
 			public void focusLost(FocusEvent e) {
 				if (textUsername.getText().equals("")) {
-					textUsername.setText(" Usename");
+					textUsername.setText(" Username");
 				}
 			}
 		});
@@ -156,31 +160,29 @@ public class Login extends JFrame {
 			}
 		});
 
-		textEmail.addFocusListener(new FocusAdapter() {
+		
+		lblChange.setText(change);
+		lblChange.addMouseListener(new MouseAdapter() {
 			@Override
-			public void focusGained(FocusEvent e) {
-				if (textEmail.getText().equals(" Email")) {
-					textEmail.setText("");
-				}
+			public void mouseEntered(MouseEvent e) {
+				lblChange.setText("<html><p style=\"text-decoration: underline;\">"+ change +"</p></html>");
 			}
-
 			@Override
-			public void focusLost(FocusEvent e) {
-				if (textEmail.getText().equals("")) {
-					textEmail.setText(" Email");
-				}
+			public void mouseExited(MouseEvent e) {
+				lblChange.setText("<html><p style=\"text-decoration: none;\">"+ change +"</p></html>");
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				loginChange();
 			}
 		});
-
-		JLabel bkg = new JLabel();
-		bkg.setBounds(0, 0, 385, 262);
-		bkg.setIcon(new ImageIcon("src\\Image\\backLogin.jpg"));
-		contentPane.add(bkg);
-		btnLogin.setContentAreaFilled(false);
+		lblChange.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		lblChange.setForeground(Color.BLUE);
+		lblChange.setBounds(145, 128, 141, 14);
+		contentPane.add(lblChange);
 		
 		textUsername.addActionListener(loginAction);
 		textPassword.addActionListener(loginAction);
-		textEmail.addActionListener(loginAction);
 		
 		btnLogin.addMouseListener(new MouseAdapter() {
 			@Override
@@ -194,20 +196,198 @@ public class Login extends JFrame {
 				btnLogin.setBorder(new LineBorder(new Color(64, 64, 64), 1));
 			}
 		});
+		
+		textComfirm = new JTextField();
+		textComfirm.setVisible(false);
+		textComfirm.setText(" Comfirm");
+		textComfirm.setForeground(Color.BLACK);
+		textComfirm.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		textComfirm.setColumns(10);
+		textComfirm.setBorder(new LineBorder(Color.WHITE));
+		textComfirm.setBackground(Color.WHITE);
+		textComfirm.setBounds(145, 128, 205, 27);
+		contentPane.add(textComfirm);
+		
+		textComfirm.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (textComfirm.getText().equals(" Comfirm")) {
+					textComfirm.setText("");
+				}
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (textComfirm.getText().equals("")) {
+					textComfirm.setText(" Comfirm");
+				}
+			}
+		});
+		btnChange.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				change();
+			}
+		});
+		
+		btnChange.setForeground(Color.BLACK);
+		btnChange.setContentAreaFilled(false);
+		btnChange.setBorder(new LineBorder(Color.DARK_GRAY));
+		btnChange.setBackground(Color.BLACK);
+		btnChange.setBounds(145, 179, 89, 23);
+		contentPane.add(btnChange);
+		btnChange.setVisible(false);
+		
+		btnLogin.setContentAreaFilled(false);
+		
+		btnCancel = new JButton("Cancel");
+		btnCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cancel();
+			}
+		});
+		btnCancel.setForeground(Color.BLACK);
+		btnCancel.setContentAreaFilled(false);
+		btnCancel.setBorder(new LineBorder(Color.DARK_GRAY));
+		btnCancel.setBackground(Color.BLACK);
+		btnCancel.setBounds(243, 179, 89, 23);
+		contentPane.add(btnCancel);
+		
+		btnLoginChange = new JButton("Login");
+		btnLoginChange.setForeground(Color.BLACK);
+		btnLoginChange.setContentAreaFilled(false);
+		btnLoginChange.setBorder(new LineBorder(Color.DARK_GRAY));
+		btnLoginChange.setBackground(Color.BLACK);
+		btnLoginChange.setBounds(145, 179, 89, 23);
+		btnLoginChange.setVisible(false);
+		contentPane.add(btnLoginChange);
+		
+		btnLoginChange.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(login()) {
+					changePassword();
+				}
+			}
+		});
+		
+		btnCancel.setVisible(false);
+		JLabel bkg = new JLabel();
+		bkg.setBounds(0, 0, 385, 262);
+		bkg.setIcon(new ImageIcon("src\\Image\\backLogin.jpg"));
+		contentPane.add(bkg);
+		
+		getNamePass();
+	}
+	
+	public void getNamePass() {
+		try {
+			user = read();
+			userString = new String(user);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		int space = userString.lastIndexOf(" ");
+		username = userString.substring(0,space);
+		password = userString.substring(space+1, userString.length());
+	}
+	
+	public byte[] read() throws IOException {
+		FileInputStream fis;
+		try {
+			fis = new FileInputStream("C:\\Users\\ADMIN\\eclipse-workspace\\QLKH\\src\\File\\User.txt");
+			int i = fis.read();
+			int n = fis.available();
+			byte[] chuoi = new byte[n];
+			fis.read(chuoi);
+			fis.close();
+			return chuoi;
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 
 	}
 	
-	public void login() {
-		@SuppressWarnings("unused")
+	
+	public static void write(byte[] chuoi) throws IOException {
+		try {
+			FileOutputStream fos = new FileOutputStream("C:\\Users\\ADMIN\\eclipse-workspace\\QLKH\\src\\File\\User.txt");
+			fos.write(chuoi);
+			fos.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	
+	
+	public boolean login() {
 		String userString = textUsername.getText();
-		@SuppressWarnings("unused")
 		String pasString = textPassword.getText();
-//		if(userString.equals(username) && pasString.equals(password)) {
-			QLKH qlkh = new QLKH();
-			qlkh.mainFrame();
-			frame.setVisible(false);
-//		} else {
-//			JOptionPane.showMessageDialog(null, "Sai thong tin dang nhap");
-//		}
+		if(userString.equals(username) && pasString.equals(password)) {
+			return true;
+			
+		} else {
+			JOptionPane.showMessageDialog(null, "Sai thong tin dang nhap");
+			return false;
+		}
+	}
+	
+	public void loginChange() {
+		JOptionPane.showMessageDialog(null, "Vui lòng đăng nhập trước để đổi mật khẩu!");
+		btnLogin.setVisible(false);
+		btnLoginChange.setVisible(true);
+	}
+	
+	public void changePassword() {
+		btnLoginChange.setVisible(false);
+		lblChange.setText("");
+		change = "";
+		lblChange.setVisible(false);
+		textComfirm.setVisible(true);
+		btnLogin.setVisible(false);
+		btnChange.setVisible(true);
+		btnCancel.setVisible(true);
+	}
+	
+	public void cancel() {
+		lblChange.setText("Change password");
+		change = "Change password";
+		lblChange.setVisible(true);
+		textComfirm.setVisible(false);
+		btnLogin.setVisible(true);
+		btnChange.setVisible(false);
+		btnCancel.setVisible(false);
+	}
+	
+	public void change() {
+		if(textUsername.getText().equals(" Username") || !Validate.checkNull(textUsername.getText())) error.append("Không được để trống username!\n");
+		if(textPassword.getText().equals(" Password") || !Validate.checkNull(textPassword.getText())) error.append("Không được để trống password!\n");
+		if(textComfirm.getText().equals(" Comfirm") || !Validate.checkNull(textComfirm.getText())) error.append("Không được để trống comfirm!");
+		if(!error.toString().isBlank()) {
+			JOptionPane.showMessageDialog(null, error.toString(),"LỖI",JOptionPane.ERROR_MESSAGE);
+			error.setLength(0);
+		} else {
+			if(textComfirm.getText().equals(textPassword.getText())) {
+				try {
+					String newPass = " " + textUsername.getText() + " " + textPassword.getText();
+					byte[] newPassByte = newPass.getBytes();
+					write(newPassByte);
+					System.out.println("done");
+					getNamePass();
+					System.out.println(username);
+					System.out.println(password);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				JOptionPane.showMessageDialog(null, "Thay đổi mật khẩu thành công!");
+				cancel();
+			} else {
+				JOptionPane.showMessageDialog(null, "Password và Comfirm phải giống nhau!","LỖI",JOptionPane.ERROR_MESSAGE);
+			}
+		}
 	}
 }

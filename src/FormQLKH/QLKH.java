@@ -8,7 +8,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -59,16 +62,65 @@ public class QLKH extends JFrame {
 	 * Create the frame.
 	 */
 	
-	JButton btnClear = new JButton("  Clear   ");
+	JButton btnMoi = new JButton("  Mới     ");
 	JButton btnAdd = new JButton(" Thêm   ");
 	JButton btnUpdate = new JButton("  Sửa     ");
 	JButton btnDelete = new JButton("  Xóa      ");
 	JButton btnHistory = new JButton(" Lịch sử");
+	JButton btnOpen = new JButton(" Mở       ");
+	JButton btnFind = new JButton(" Tìm       ");
+	JButton btnExit = new JButton(" Thoát    ");
+	
+	MouseListener hover = new MouseListener() {
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			JButton btnHover = (JButton) e.getComponent();
+			int x = btnHover.getX();
+			int y = btnHover.getY();
+			int width = btnHover.getWidth();
+			int height = btnHover.getHeight();
+			btnHover.setBounds(x+3, y+3, width-6, height-6);
+			btnHover.setBorder(new LineBorder(new Color(64, 64, 64), 1));
+		}
+		
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			JButton btnHover = (JButton) e.getComponent();
+			int x = btnHover.getX();
+			int y = btnHover.getY();
+			int width = btnHover.getWidth();
+			int height = btnHover.getHeight();
+			btnHover.setBounds(x-3, y-3, width+6, height+6);
+			btnHover.setBorder(new LineBorder(new Color(64, 64, 64), 2));
+		}
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+	};
 	
 	public QLKH() {
 		setBackground(SystemColor.activeCaptionBorder);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 601, 560);
+		setBounds(100, 100, 692, 560);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -143,14 +195,14 @@ public class QLKH extends JFrame {
 		contentPane.add(textSoLuong);
 		text.start();
 
-		btnClear.setForeground(Color.BLACK);
+		btnMoi.setForeground(Color.BLACK);
 
-		btnClear.setBackground(SystemColor.activeCaptionBorder);
-		btnClear.setBounds(468, 121, 89, 23);
-		contentPane.add(btnClear);
+		btnMoi.setBackground(SystemColor.activeCaptionBorder);
+		btnMoi.setBounds(468, 121, 89, 23);
+		contentPane.add(btnMoi);
 
 		JScrollPane scrollPaneFormTable = new JScrollPane();
-		scrollPaneFormTable.setBounds(10, 350, 567, 157);
+		scrollPaneFormTable.setBounds(10, 350, 658, 157);
 		scrollPaneFormTable.setBackground(new Color(0,0,0,0));
 		contentPane.add(scrollPaneFormTable);
 
@@ -161,17 +213,20 @@ public class QLKH extends JFrame {
 		btnAdd.setBackground(SystemColor.activeCaptionBorder);
 		btnAdd.setBounds(468, 159, 89, 23);
 		contentPane.add(btnAdd);
+		btnUpdate.setForeground(Color.BLACK);
 
 		btnUpdate.setBackground(SystemColor.activeCaptionBorder);
 		btnUpdate.setBounds(468, 197, 89, 23);
 		contentPane.add(btnUpdate);
+		btnDelete.setForeground(Color.BLACK);
 
 		btnDelete.setBackground(SystemColor.activeCaptionBorder);
 		btnDelete.setBounds(468, 235, 89, 23);
 		contentPane.add(btnDelete);
+		btnHistory.setForeground(Color.BLACK);
 
 		btnHistory.setBackground(SystemColor.activeCaptionBorder);
-		btnHistory.setBounds(468, 273, 89, 23);
+		btnHistory.setBounds(567, 197, 89, 23);
 		contentPane.add(btnHistory);
 		
 		JLabel lblDanhSch = new JLabel("Danh sách");
@@ -179,13 +234,13 @@ public class QLKH extends JFrame {
 		lblDanhSch.setBounds(10, 320, 272, 19);
 		contentPane.add(lblDanhSch);
 		
-		btnClear.setBorder(new LineBorder(new Color(64, 64, 64), 1));
+		btnMoi.setBorder(new LineBorder(new Color(64, 64, 64), 1));
 		btnAdd.setBorder(new LineBorder(Color.DARK_GRAY));
 		btnDelete.setBorder(new LineBorder(Color.DARK_GRAY));
-		btnHistory.setBorder(new LineBorder(Color.DARK_GRAY));
+		btnHistory.setBorder(new LineBorder(new Color(64, 64, 64)));
 		btnUpdate.setBorder(new LineBorder(Color.DARK_GRAY));
 		
-		btnClear.setContentAreaFilled(false);
+		btnMoi.setContentAreaFilled(false);
 		btnHistory.setContentAreaFilled(false);
 		btnDelete.setContentAreaFilled(false);
 		btnUpdate.setContentAreaFilled(false);
@@ -196,6 +251,30 @@ public class QLKH extends JFrame {
 		textMaSP.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		textSoLuong.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		textTen.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		btnOpen.setForeground(Color.BLACK);
+		
+		btnOpen.setIcon(new ImageIcon("C:\\Users\\ADMIN\\eclipse-workspace\\QLKH\\src\\Image\\open.png"));
+		btnOpen.setContentAreaFilled(false);
+		btnOpen.setBorder(new LineBorder(new Color(64, 64, 64)));
+		btnOpen.setBackground(SystemColor.activeCaptionBorder);
+		btnOpen.setBounds(567, 121, 89, 23);
+		contentPane.add(btnOpen);
+		
+		btnFind.setIcon(new ImageIcon("C:\\Users\\ADMIN\\eclipse-workspace\\QLKH\\src\\Image\\find.png"));
+		btnFind.setForeground(Color.BLACK);
+		btnFind.setContentAreaFilled(false);
+		btnFind.setBorder(new LineBorder(new Color(64, 64, 64)));
+		btnFind.setBackground(SystemColor.activeCaptionBorder);
+		btnFind.setBounds(567, 159, 89, 23);
+		contentPane.add(btnFind);
+		btnExit.setForeground(Color.BLACK);
+		
+		btnExit.setIcon(new ImageIcon("C:\\Users\\ADMIN\\eclipse-workspace\\QLKH\\src\\Image\\exit.png"));
+		btnExit.setContentAreaFilled(false);
+		btnExit.setBorder(new LineBorder(new Color(64, 64, 64)));
+		btnExit.setBackground(SystemColor.activeCaptionBorder);
+		btnExit.setBounds(567, 235, 89, 23);
+		contentPane.add(btnExit);
 
 		
 		table();
@@ -209,7 +288,7 @@ public class QLKH extends JFrame {
 			}
 		});
 		
-		btnClear.addActionListener(new ActionListener() {
+		btnMoi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
@@ -247,7 +326,7 @@ public class QLKH extends JFrame {
 	}
 	
 	public void image() {
-		btnClear.setIcon(new ImageIcon("src\\Image\\clear.png"));
+		btnMoi.setIcon(new ImageIcon("src\\Image\\clear.png"));
 		btnHistory.setIcon(new ImageIcon("src\\Image\\history.png"));
 		btnAdd.setIcon(new ImageIcon("src\\Image\\luu.png"));
 		btnUpdate.setIcon(new ImageIcon("src\\Image\\update.png"));
@@ -255,75 +334,19 @@ public class QLKH extends JFrame {
 		
 		JLabel bkg = new JLabel();
 		bkg.setIcon(new ImageIcon("src\\Image\\background.jpg"));
-		bkg.setBounds(0, 0, 601, 534);
+		bkg.setBounds(0, 0, 678, 534);
 		contentPane.add(bkg);
 	}
 	
+	
 	public void hover() {
-		btnClear.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {		
-				btnClear.setBounds(465, 118, 95, 29);
-				btnClear.setBorder(new LineBorder(new Color(64, 64, 64), 2));
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btnClear.setBounds(468, 121, 89, 23);
-				btnClear.setBorder(new LineBorder(new Color(64, 64, 64), 1));
-			}
-		});
-		
-		btnAdd.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {			
-				btnAdd.setBounds(465, 156, 95, 29);
-				btnAdd.setBorder(new LineBorder(new Color(64, 64, 64), 2));
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btnAdd.setBounds(468, 159, 89, 23);
-				btnAdd.setBorder(new LineBorder(new Color(64, 64, 64), 1));
-			}
-		});
-		
-		btnDelete.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btnDelete.setBounds(465, 232, 95, 29);
-				btnDelete.setBorder(new LineBorder(new Color(64, 64, 64), 2));
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btnDelete.setBounds(468, 235, 89, 23);
-				btnDelete.setBorder(new LineBorder(new Color(64, 64, 64), 1));
-			}
-		});
-		
-		btnHistory.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btnHistory.setBounds(465, 270, 95, 29);
-				btnHistory.setBorder(new LineBorder(new Color(64, 64, 64), 2));
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btnHistory.setBounds(468, 273, 89, 23);
-				btnHistory.setBorder(new LineBorder(new Color(64, 64, 64), 1));
-			}
-		});
-		
-		btnUpdate.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btnUpdate.setBounds(465, 194, 95, 29);
-				btnUpdate.setBorder(new LineBorder(new Color(64, 64, 64), 2));
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btnUpdate.setBounds(468, 197, 89, 23);
-				btnUpdate.setBorder(new LineBorder(new Color(64, 64, 64), 1));
-			}
-		});
-		
+		btnAdd.addMouseListener(hover);
+		btnDelete.addMouseListener(hover);
+		btnHistory.addMouseListener(hover);
+		btnMoi.addMouseListener(hover);
+		btnUpdate.addMouseListener(hover);
+		btnExit.addMouseListener(hover);
+		btnOpen.addMouseListener(hover);
+		btnFind.addMouseListener(hover);
 	}
 }
