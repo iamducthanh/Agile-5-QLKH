@@ -26,7 +26,6 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-
 @SuppressWarnings("serial")
 public class Login extends JFrame {
 	private JPanel contentPane;
@@ -64,7 +63,7 @@ public class Login extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	Action loginAction = new AbstractAction() {	
+	Action loginAction = new AbstractAction() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			login();
@@ -72,7 +71,7 @@ public class Login extends JFrame {
 	};
 	private JButton btnCancel;
 	private JButton btnLoginChange;
-	
+
 	public Login() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 376, 262);
@@ -89,7 +88,7 @@ public class Login extends JFrame {
 		textUsername.setColumns(10);
 		textUsername.setBorder(new LineBorder(Color.WHITE));
 		textUsername.setBounds(145, 52, 205, 27);
-	
+
 		contentPane.add(textUsername);
 
 		textPassword = new JTextField();
@@ -111,7 +110,7 @@ public class Login extends JFrame {
 		btnLogin.setForeground(Color.BLACK);
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(login()) {
+				if (login()) {
 					QLKH qlkh = new QLKH();
 					qlkh.mainFrame();
 				}
@@ -159,17 +158,18 @@ public class Login extends JFrame {
 			}
 		});
 
-		
 		lblChange.setText(change);
 		lblChange.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				lblChange.setText("<html><p style=\"text-decoration: underline;\">"+ change +"</p></html>");
+				lblChange.setText("<html><p style=\"text-decoration: underline;\">" + change + "</p></html>");
 			}
+
 			@Override
 			public void mouseExited(MouseEvent e) {
-				lblChange.setText("<html><p style=\"text-decoration: none;\">"+ change +"</p></html>");
+				lblChange.setText("<html><p style=\"text-decoration: none;\">" + change + "</p></html>");
 			}
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				loginChange();
@@ -179,23 +179,24 @@ public class Login extends JFrame {
 		lblChange.setForeground(Color.BLUE);
 		lblChange.setBounds(145, 128, 141, 14);
 		contentPane.add(lblChange);
-		
+
 		textUsername.addActionListener(loginAction);
 		textPassword.addActionListener(loginAction);
-		
+
 		btnLogin.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				btnLogin.setBounds(141, 176, 95, 29);
 				btnLogin.setBorder(new LineBorder(new Color(64, 64, 64), 2));
 			}
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				btnLogin.setBounds(144, 179, 89, 23);
 				btnLogin.setBorder(new LineBorder(new Color(64, 64, 64), 1));
 			}
 		});
-		
+
 		textComfirm = new JTextField();
 		textComfirm.setVisible(false);
 		textComfirm.setText(" Comfirm");
@@ -206,7 +207,7 @@ public class Login extends JFrame {
 		textComfirm.setBackground(Color.WHITE);
 		textComfirm.setBounds(145, 128, 205, 27);
 		contentPane.add(textComfirm);
-		
+
 		textComfirm.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -227,7 +228,7 @@ public class Login extends JFrame {
 				change();
 			}
 		});
-		
+
 		btnChange.setForeground(Color.BLACK);
 		btnChange.setContentAreaFilled(false);
 		btnChange.setBorder(new LineBorder(Color.DARK_GRAY));
@@ -235,9 +236,9 @@ public class Login extends JFrame {
 		btnChange.setBounds(145, 179, 89, 23);
 		contentPane.add(btnChange);
 		btnChange.setVisible(false);
-		
+
 		btnLogin.setContentAreaFilled(false);
-		
+
 		btnCancel = new JButton("Cancel");
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -250,7 +251,7 @@ public class Login extends JFrame {
 		btnCancel.setBackground(Color.BLACK);
 		btnCancel.setBounds(243, 179, 89, 23);
 		contentPane.add(btnCancel);
-		
+
 		btnLoginChange = new JButton("Login");
 		btnLoginChange.setForeground(Color.BLACK);
 		btnLoginChange.setContentAreaFilled(false);
@@ -259,24 +260,24 @@ public class Login extends JFrame {
 		btnLoginChange.setBounds(145, 179, 89, 23);
 		btnLoginChange.setVisible(false);
 		contentPane.add(btnLoginChange);
-		
+
 		btnLoginChange.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(login()) {
+				if (login()) {
 					changePassword();
 				}
 			}
 		});
-		
+
 		btnCancel.setVisible(false);
 		JLabel bkg = new JLabel();
 		bkg.setBounds(0, 0, 385, 262);
 		bkg.setIcon(new ImageIcon("src\\Image\\backLogin.jpg"));
 		contentPane.add(bkg);
-		
+
 		getNamePass();
 	}
-	
+
 	public void getNamePass() {
 		try {
 			user = read();
@@ -286,10 +287,10 @@ public class Login extends JFrame {
 			e1.printStackTrace();
 		}
 		int space = userString.lastIndexOf(" ");
-		username = userString.substring(0,space);
-		password = userString.substring(space+1, userString.length());
+		username = userString.substring(0, space);
+		password = userString.substring(space + 1, userString.length());
 	}
-	
+
 	public byte[] read() throws IOException {
 		FileInputStream fis;
 		try {
@@ -308,8 +309,7 @@ public class Login extends JFrame {
 		}
 
 	}
-	
-	
+
 	public static void write(byte[] chuoi) throws IOException {
 		try {
 			FileOutputStream fos = new FileOutputStream("src\\File\\User.txt");
@@ -321,26 +321,25 @@ public class Login extends JFrame {
 		}
 
 	}
-	
-	
+
 	public boolean login() {
 		String userString = textUsername.getText();
 		String pasString = textPassword.getText();
-		if(userString.equals(username) && pasString.equals(password)) {
+		if (userString.equals(username) && pasString.equals(password)) {
 			return true;
-			
+
 		} else {
-			JOptionPane.showMessageDialog(null, "Sai thong tin dang nhap");
+			JOptionPane.showMessageDialog(null, "Sai thông tin đăng nhập!");
 			return false;
 		}
 	}
-	
+
 	public void loginChange() {
 		JOptionPane.showMessageDialog(null, "Vui lòng đăng nhập trước để đổi mật khẩu!");
 		btnLogin.setVisible(false);
 		btnLoginChange.setVisible(true);
 	}
-	
+
 	public void changePassword() {
 		btnLoginChange.setVisible(false);
 		lblChange.setText("");
@@ -351,7 +350,7 @@ public class Login extends JFrame {
 		btnChange.setVisible(true);
 		btnCancel.setVisible(true);
 	}
-	
+
 	public void cancel() {
 		lblChange.setText("Change password");
 		change = "Change password";
@@ -361,32 +360,37 @@ public class Login extends JFrame {
 		btnChange.setVisible(false);
 		btnCancel.setVisible(false);
 	}
-	
+
 	public void change() {
-		if(textUsername.getText().equals(" Username") || !Validate.checkNull(textUsername.getText())) error.append("Không được để trống username!\n");
-		if(textPassword.getText().equals(" Password") || !Validate.checkNull(textPassword.getText())) error.append("Không được để trống password!\n");
-		if(textComfirm.getText().equals(" Comfirm") || !Validate.checkNull(textComfirm.getText())) error.append("Không được để trống comfirm!");
-		if(!error.toString().isBlank()) {
-			JOptionPane.showMessageDialog(null, error.toString(),"LỖI",JOptionPane.ERROR_MESSAGE);
+		if (textUsername.getText().equals(" Username") || !Validate.checkNull(textUsername.getText()))
+			error.append("Không được để trống username!\n");
+		if (textPassword.getText().equals(" Password") || !Validate.checkNull(textPassword.getText()))
+			error.append("Không được để trống password!\n");
+		if (textComfirm.getText().equals(" Comfirm") || !Validate.checkNull(textComfirm.getText()))
+			error.append("Không được để trống comfirm!");
+		if (!error.toString().isBlank()) {
+			JOptionPane.showMessageDialog(null, error.toString(), "LỖI", JOptionPane.ERROR_MESSAGE);
 			error.setLength(0);
 		} else {
-			if(textComfirm.getText().equals(textPassword.getText())) {
-				try {
-					String newPass = " " + textUsername.getText() + " " + textPassword.getText();
-					byte[] newPassByte = newPass.getBytes();
-					write(newPassByte);
-					System.out.println("done");
-					getNamePass();
-					System.out.println(username);
-					System.out.println(password);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+			if (textComfirm.getText().equals(textPassword.getText())) {
+				if (textComfirm.getText().lastIndexOf(" ") != -1) {
+					JOptionPane.showMessageDialog(null, "Username và Password không được chứa kí tự đặc biệt!");
+				} else {
+					try {
+						String newPass = " " + textUsername.getText() + " " + textPassword.getText();
+						byte[] newPassByte = newPass.getBytes();
+						write(newPassByte);
+						getNamePass();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					JOptionPane.showMessageDialog(null, "Thay đổi mật khẩu thành công!");
+					cancel();
 				}
-				JOptionPane.showMessageDialog(null, "Thay đổi mật khẩu thành công!");
-				cancel();
 			} else {
-				JOptionPane.showMessageDialog(null, "Password và Comfirm phải giống nhau!","LỖI",JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Password và Comfirm phải giống nhau!", "LỖI",
+						JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}
