@@ -1,5 +1,13 @@
 package FormQLKH;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+
+
 public class SanPham {
 	private String Masp, Ten, Hsd;
 	private double Gia;
@@ -54,6 +62,23 @@ public class SanPham {
 
 	public void setSoLuong(int soLuong) {
 		SoLuong = soLuong;
+	}
+	
+	public String getTrangThai() {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+             Date date = sdf.parse(Hsd);
+            Date now = new Date();
+             if(date.compareTo(now)>=0){
+                 return "Còn hạn";
+             }else {
+            	 return "Hết hạn";
+             }
+        } catch (ParseException ex) {
+            System.out.println("Không đúng định dạng");
+            Logger.getLogger(Date.class.getName()).log(Level.SEVERE, null, ex);
+            return "";
+        }    
 	}
 
 	@Override

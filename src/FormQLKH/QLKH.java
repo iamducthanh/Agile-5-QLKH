@@ -351,11 +351,22 @@ public class QLKH extends JFrame {
 		if(error.length() == 0) {
 			list.add(new SanPham(textMaSP.getText(),textTen.getText(),textHanSuDung.getText(),Double.parseDouble(textGia.getText()),Integer.parseInt(textSoLuong.getText())));
 			for (int i = 0; i < list.size(); i++) {
-				System.out.println(list.get(i).getMasp());
+				list.add(new SanPham(textMaSP.getText(), textTen.getText(), textHanSuDung.getText(),
+						Double.parseDouble(textGia.getText()), Integer.parseInt(textSoLuong.getText())));
+				filltable();
 			}
 		
 		} else {
 			JOptionPane.showMessageDialog(null, error.toString(),"Lỗi", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
+	public void filltable() {
+		model.setRowCount(0);
+		for(SanPham sp: list) {
+			model.addRow(new Object[] {
+					sp.getMasp(),sp.getTen(),sp.getGia(),sp.getSoLuong(),sp.getHsd(),sp.getTrangThai()
+			});
 		}
 	}
 	
