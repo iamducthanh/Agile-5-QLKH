@@ -22,6 +22,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
@@ -30,8 +31,8 @@ import javax.swing.border.LineBorder;
 public class Login extends JFrame {
 	private JPanel contentPane;
 	private JTextField textUsername;
-	private JTextField textPassword;
-	private JTextField textComfirm;
+	private JPasswordField textPassword;
+	private JPasswordField textComfirm;
 	static Login frame = new Login();
 	private String username = "";
 	private String password = "";
@@ -91,7 +92,7 @@ public class Login extends JFrame {
 
 		contentPane.add(textUsername);
 
-		textPassword = new JTextField();
+		textPassword = new JPasswordField();
 		textPassword.setForeground(Color.black);
 		textPassword.setBackground(Color.white);
 		textPassword.setText(" Password");
@@ -197,7 +198,7 @@ public class Login extends JFrame {
 			}
 		});
 
-		textComfirm = new JTextField();
+		textComfirm = new JPasswordField();
 		textComfirm.setVisible(false);
 		textComfirm.setText(" Comfirm");
 		textComfirm.setForeground(Color.BLACK);

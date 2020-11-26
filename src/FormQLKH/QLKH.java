@@ -8,11 +8,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -34,6 +36,8 @@ public class QLKH extends JFrame {
 	private JTextField textSoLuong;
 	private JTable table;
 	DefaultTableModel model = new DefaultTableModel();
+	StringBuilder error = new StringBuilder();
+	static ArrayList<SanPham> list = new ArrayList<SanPham>();
 
 	/**
 	 * Launch the application.
@@ -126,7 +130,7 @@ public class QLKH extends JFrame {
 		JLabel lblQLKH = new JLabel("QUẢN LÝ KHO HÀNG");
 		lblQLKH.setForeground(Color.BLUE);
 		lblQLKH.setFont(new Font("Tahoma", Font.BOLD, 19));
-		lblQLKH.setBounds(100, 24, 477, 40);
+		lblQLKH.setBounds(100, 24, 486, 40);
 		contentPane.add(lblQLKH);
 
 		Text text = new Text(lblQLKH);
@@ -282,6 +286,7 @@ public class QLKH extends JFrame {
 		
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				addSP();
 			}
 		});
 		
@@ -335,6 +340,24 @@ public class QLKH extends JFrame {
 		contentPane.add(bkg);
 	}
 	
+	public void addSP() {
+		error.setLength(0);
+		error.append(Validate.checkMa(textMaSP.getText()));
+		error.append(Validate.checkTen(textTen.getText()));
+		error.append(Validate.checkGia(textGia.getText()));
+		error.append(Validate.checkSL(textSoLuong.getText()));
+		error.append(Validate.checkHSD(textHanSuDung.getText()));
+		
+		if(error.length() == 0) {
+			list.add(new SanPham(textMaSP.getText(),textTen.getText(),textHanSuDung.getText(),Double.parseDouble(textGia.getText()),Integer.parseInt(textSoLuong.getText())));
+			for (int i = 0; i < list.size(); i++) {
+				System.out.println(list.get(i).getMasp());
+			}
+		
+		} else {
+			JOptionPane.showMessageDialog(null, error.toString(),"Lỗi", JOptionPane.ERROR_MESSAGE);
+		}
+	}
 	
 	public void hover() {
 		btnAdd.addMouseListener(hover);

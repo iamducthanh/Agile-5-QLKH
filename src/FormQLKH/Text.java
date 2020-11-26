@@ -4,7 +4,7 @@ import javax.swing.JLabel;
 
 class Text extends Thread {
 	JLabel lbJLabel;
-	String textTen = "                QUẢN LÝ KHO HÀNG                ";
+	String textTen = "                     QUẢN LÝ KHO HÀNG                     ";
 	int i = 1;
 	String textString = "";
 
