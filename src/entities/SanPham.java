@@ -49,7 +49,7 @@ public class SanPham {
     }
     
     public String getTrangThai() {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
             Date date = sdf.parse(Hsd);
             Date now = new Date();

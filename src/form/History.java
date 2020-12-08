@@ -7,6 +7,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -20,13 +23,19 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
+import File.Xflie;
+
+import javax.swing.JTextArea;
+
 @SuppressWarnings("serial")
 public class History extends JFrame {
 
 	private JPanel contentPane;
-	private JTable table;
 	DefaultTableModel model = new DefaultTableModel();
 	static History frame = new History();
+	String path = "C:\\Users\\ADMIN\\Desktop\\File.txt";
+	static StringBuilder LichSu = new StringBuilder();
+	JTextArea textArea = new JTextArea();
 
 	/**
 	 * Launch the application.
@@ -67,17 +76,15 @@ public class History extends JFrame {
 		scrollPane.setBounds(20, 50, 395, 202);
 		contentPane.add(scrollPane);
 		
-		table = new JTable();
-		scrollPane.setViewportView(table);
+		scrollPane.setViewportView(textArea);
 		JTableHeader header = new JTableHeader();
 		header.setBackground(Color.red);
 		model.addColumn("Lịch sử");
-		table.setModel(model);
 		JButton btnQuayLi = new JButton("Quay lại");
 		btnQuayLi.setForeground(new Color(0, 0, 0));
 		btnQuayLi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frame.setVisible(false);
+				
 			}
 		});
 		btnQuayLi.setBorder(new LineBorder(Color.BLACK));
@@ -89,8 +96,7 @@ public class History extends JFrame {
 		lblBkg.setIcon(new ImageIcon("src\\Image\\background.jpg"));
 		contentPane.add(lblBkg);
 		btnQuayLi.setContentAreaFilled(false);
-		JTableHeader header1 = table.getTableHeader();
-		header1.setBackground(new Color(179, 115, 52, 200));
+//		header1.setBackground(new Color(179, 115, 52, 200));
 		
 		btnQuayLi.addMouseListener(new MouseAdapter() {
 			@Override
@@ -104,5 +110,9 @@ public class History extends JFrame {
 				btnQuayLi.setBorder(new LineBorder(Color.BLACK, 1));
 			}
 		});
+		textArea.setText(QLKH.LichSu.toString());
 	}
+	
+	
+	
 }

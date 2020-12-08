@@ -13,6 +13,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -27,24 +31,26 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import dao.UserDao;
+import entities.User;
+import help.DataBaseConnect;
 import help.Validate;
 
 @SuppressWarnings("serial")
 public class Login extends JFrame {
 	private JPanel contentPane;
 	private JTextField textUsername;
-	private JPasswordField textPassword;
-	private JPasswordField textComfirm;
+	private JTextField textPassword;
+	private JTextField textComfirm;
 	static Login frame = new Login();
-	private String username = "";
-	private String password = "";
-	private byte[] user;
-	String userString = "";
 	JLabel lblChange = new JLabel();
 	String change = "Change password";
 	JButton btnChange = new JButton("Change");
 	JButton btnLogin = new JButton("Login");
 	StringBuilder error = new StringBuilder();
+	ArrayList<User> listUser = new ArrayList<User>();
+	boolean check = false;
+	public static String vaiTro;
 
 	/**
 	 * Launch the application.
@@ -94,7 +100,7 @@ public class Login extends JFrame {
 
 		contentPane.add(textUsername);
 
-		textPassword = new JPasswordField();
+		textPassword = new JTextField();
 		textPassword.setForeground(Color.black);
 		textPassword.setBackground(Color.white);
 		textPassword.setText(" Password");
@@ -113,9 +119,11 @@ public class Login extends JFrame {
 		btnLogin.setForeground(Color.BLACK);
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (login()) {
+				boolean lo = login();
+				if (lo) {
 					QLKH qlkh = new QLKH();
 					qlkh.mainFrame();
+					frame.setVisible(false);
 				}
 			}
 		});
@@ -146,6 +154,7 @@ public class Login extends JFrame {
 		});
 
 		textPassword.addFocusListener(new FocusAdapter() {
+			@SuppressWarnings("deprecation")
 			@Override
 			public void focusGained(FocusEvent e) {
 				if (textPassword.getText().equals(" Password")) {
@@ -153,6 +162,7 @@ public class Login extends JFrame {
 				}
 			}
 
+			@SuppressWarnings("deprecation")
 			@Override
 			public void focusLost(FocusEvent e) {
 				if (textPassword.getText().equals("")) {
@@ -175,7 +185,7 @@ public class Login extends JFrame {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				loginChange();
+				changePassword();
 			}
 		});
 		lblChange.setFont(new Font("Tahoma", Font.PLAIN, 10));
@@ -200,9 +210,9 @@ public class Login extends JFrame {
 			}
 		});
 
-		textComfirm = new JPasswordField();
+		textComfirm = new JTextField();
 		textComfirm.setVisible(false);
-		textComfirm.setText(" Comfirm");
+		textComfirm.setText(" New Password");
 		textComfirm.setForeground(Color.BLACK);
 		textComfirm.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		textComfirm.setColumns(10);
@@ -212,17 +222,19 @@ public class Login extends JFrame {
 		contentPane.add(textComfirm);
 
 		textComfirm.addFocusListener(new FocusAdapter() {
+			@SuppressWarnings("deprecation")
 			@Override
 			public void focusGained(FocusEvent e) {
-				if (textComfirm.getText().equals(" Comfirm")) {
+				if (textComfirm.getText().equals(" New Password")) {
 					textComfirm.setText("");
 				}
 			}
 
+			@SuppressWarnings("deprecation")
 			@Override
 			public void focusLost(FocusEvent e) {
 				if (textComfirm.getText().equals("")) {
-					textComfirm.setText(" Comfirm");
+					textComfirm.setText(" New Password");
 				}
 			}
 		});
@@ -266,9 +278,7 @@ public class Login extends JFrame {
 
 		btnLoginChange.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (login()) {
-					changePassword();
-				}
+
 			}
 		});
 
@@ -277,71 +287,31 @@ public class Login extends JFrame {
 		bkg.setBounds(0, 0, 385, 262);
 		bkg.setIcon(new ImageIcon("src\\Image\\backLogin.jpg"));
 		contentPane.add(bkg);
-
-		getNamePass();
+		getUsers();
 	}
-
-	public void getNamePass() {
-		try {
-			user = read();
-			userString = new String(user);
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		int space = userString.lastIndexOf(" ");
-		username = userString.substring(0, space);
-		password = userString.substring(space + 1, userString.length());
-	}
-
-	public byte[] read() throws IOException {
-		FileInputStream fis;
-		try {
-			fis = new FileInputStream("src\\File\\User.txt");
-			@SuppressWarnings("unused")
-			int i = fis.read();
-			int n = fis.available();
-			byte[] chuoi = new byte[n];
-			fis.read(chuoi);
-			fis.close();
-			return chuoi;
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
-
-	}
-
-	public static void write(byte[] chuoi) throws IOException {
-		try {
-			FileOutputStream fos = new FileOutputStream("src\\File\\User.txt");
-			fos.write(chuoi);
-			fos.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+	
+	public void getUsers() {
+		listUser.removeAll(listUser);
+		listUser = UserDao.loadUser();
 	}
 
 	public boolean login() {
-		String userString = textUsername.getText();
-		String pasString = textPassword.getText();
-		if (userString.equals(username) && pasString.equals(password)) {
-			return true;
-
-		} else {
-			JOptionPane.showMessageDialog(null, "Sai thông tin đăng nhập!");
-			return false;
+		check = false;
+		listUser.forEach((user) -> {
+			if(user.username.equals(textUsername.getText())) {
+				if(user.password.equals(textPassword.getText())) {
+					check = true;
+					vaiTro = user.vaiTro;
+					
+				}
+			}
+		});
+		if(check == false) {
+			JOptionPane.showMessageDialog(null, "Thông tin đăng nhập không nhập không chính xác!");
 		}
+		return check;
 	}
 
-	public void loginChange() {
-		JOptionPane.showMessageDialog(null, "Vui lòng đăng nhập trước để đổi mật khẩu!");
-		btnLogin.setVisible(false);
-		btnLoginChange.setVisible(true);
-	}
 
 	public void changePassword() {
 		btnLoginChange.setVisible(false);
@@ -364,37 +334,32 @@ public class Login extends JFrame {
 		btnCancel.setVisible(false);
 	}
 
+	@SuppressWarnings("deprecation")
 	public void change() {
-		if (textUsername.getText().equals(" Username") || !Validate.checkNull(textUsername.getText()))
-			error.append("Không được để trống username!\n");
-		if (textPassword.getText().equals(" Password") || !Validate.checkNull(textPassword.getText()))
-			error.append("Không được để trống password!\n");
-		if (textComfirm.getText().equals(" Comfirm") || !Validate.checkNull(textComfirm.getText()))
-			error.append("Không được để trống comfirm!");
-		if (!error.toString().isBlank()) {
-			JOptionPane.showMessageDialog(null, error.toString(), "LỖI", JOptionPane.ERROR_MESSAGE);
-			error.setLength(0);
-		} else {
-			if (textComfirm.getText().equals(textPassword.getText())) {
-				if (textComfirm.getText().lastIndexOf(" ") != -1) {
-					JOptionPane.showMessageDialog(null, "Username và Password không được chứa kí tự đặc biệt!");
-				} else {
+		listUser.forEach((user) -> {
+			if(user.username.equals(textUsername.getText())) {
+				if(user.password.equals(textPassword.getText())) {
 					try {
-						String newPass = " " + textUsername.getText() + " " + textPassword.getText();
-						byte[] newPassByte = newPass.getBytes();
-						write(newPassByte);
-						getNamePass();
-					} catch (IOException e) {
+						Connection conn = DataBaseConnect.Connect();
+						PreparedStatement ps = conn.prepareStatement("update Users Set pass = ? where username = ?");
+						ps.setString(1, textComfirm.getText());
+						ps.setString(2, textUsername.getText());
+						ps.execute();
+						JOptionPane.showMessageDialog(null, "Thay đổi mật khẩu thành công!");
+						listUser = UserDao.loadUser();
+					} catch (ClassNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (SQLException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					JOptionPane.showMessageDialog(null, "Thay đổi mật khẩu thành công!");
-					cancel();
+					
 				}
-			} else {
-				JOptionPane.showMessageDialog(null, "Password và Comfirm phải giống nhau!", "LỖI",
-						JOptionPane.ERROR_MESSAGE);
 			}
+		});
+		if(check == false) {
+			JOptionPane.showMessageDialog(null, "Thông tin đăng nhập không nhập không chính xác!");
 		}
 	}
 }
