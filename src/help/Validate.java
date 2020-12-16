@@ -5,13 +5,13 @@ import form.QLKH;
 public class Validate {
 	static boolean check = true;
 	public static boolean checkNull(String text) {
-		if(text.isBlank()) {
+		if(text.trim().equalsIgnoreCase("")) {
 			return false;
 		} else return true;
 	}
 	
 	public static String checkMa(String maSP) {
-		if(maSP.isBlank()) {
+		if(maSP.trim().equalsIgnoreCase("")) {
 			return "Bạn không được để trống mã sản phẩm!\n";
 		} else {
 			QLKH.list.forEach((SP) -> {
@@ -29,7 +29,7 @@ public class Validate {
 	}
 	
 	public static String checkTen(String tenSP) {
-		if(tenSP.isBlank()) {
+		if(tenSP.trim().equalsIgnoreCase("")) {
 			return "Bạn không được để trống tên sản phẩm!\n";
 		} else {
 			return "";
@@ -37,7 +37,7 @@ public class Validate {
 	}
 	
 	public static String checkGia(String gia) {
-		if(gia.isBlank()) {
+		if(gia.trim().equalsIgnoreCase("")) {
 			return "Bạn không được để trống giá!\n";
 		} else {
 			try {
@@ -51,7 +51,7 @@ public class Validate {
 	}
 	
 	public static String checkSL(String soLuong) {
-		if(soLuong.isBlank()) {
+		if(soLuong.trim().equalsIgnoreCase("")) {
 			return "Bạn không được để trống số lượng!\n";
 		} else {
 			try {
@@ -66,7 +66,7 @@ public class Validate {
 	
 	public static String checkHSD(String hsd) {
 		String reDa = "^\\d{4}\\-(0?[1-9]|1[012])\\-(0?[1-9]|[12][0-9]|3[01])$";
-		if(hsd.isBlank()) {
+		if(hsd.trim().equalsIgnoreCase("")) {
 			return "Bạn không được để trống hạn sử dụng!\n";
 		} else {
 			if(!hsd.matches(reDa)) {

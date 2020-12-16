@@ -133,7 +133,7 @@ public class Login extends JFrame {
 		contentPane.add(btnLogin);
 
 		JLabel lblUser = new JLabel("New label");
-		lblUser.setIcon(new ImageIcon("src\\Image\\user.jpg"));
+		lblUser.setIcon(new ImageIcon("C:\\QLKH\\Image\\user.jpg"));
 		lblUser.setBounds(13, 52, 122, 150);
 		contentPane.add(lblUser);
 
@@ -285,7 +285,7 @@ public class Login extends JFrame {
 		btnCancel.setVisible(false);
 		JLabel bkg = new JLabel();
 		bkg.setBounds(0, 0, 385, 262);
-		bkg.setIcon(new ImageIcon("src\\Image\\backLogin.jpg"));
+		bkg.setIcon(new ImageIcon("C:\\QLKH\\Image\\backLogin.jpg"));
 		contentPane.add(bkg);
 		getUsers();
 	}
@@ -344,9 +344,10 @@ public class Login extends JFrame {
 						PreparedStatement ps = conn.prepareStatement("update Users Set pass = ? where username = ?");
 						ps.setString(1, textComfirm.getText());
 						ps.setString(2, textUsername.getText());
-						ps.execute();
+						int i = ps.executeUpdate();
 						JOptionPane.showMessageDialog(null, "Thay đổi mật khẩu thành công!");
 						listUser = UserDao.loadUser();
+                                                check = true;
 					} catch (ClassNotFoundException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

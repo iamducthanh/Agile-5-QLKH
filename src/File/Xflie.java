@@ -19,9 +19,9 @@ import java.util.ArrayList;
  * @author Duy
  */
 public class Xflie {
-//	static  String path ="C:\\\\Users\\\\ADMIN\\\\Desktop\\\\File.txt";
+//	public static String path ="C:\\Program Files\\QLKH\\File.txt";
 //    StringBuilder error = new StringBuilder();
-//   static ArrayList<String> listFile =new ArrayList();
+   static ArrayList<String> listFile =new ArrayList();
     public static Object readObject(String path) throws FileNotFoundException, IOException, ClassNotFoundException {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path));) {
             Object object = ois.readObject();
@@ -44,6 +44,7 @@ public class Xflie {
 //    		Xflie.writeObject(path, listFile);
 //		} catch (Exception e) {
 //			// TODO: handle exception
+//			e.printStackTrace();
 //		}
 //	}
 }

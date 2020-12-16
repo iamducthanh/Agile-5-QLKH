@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -28,15 +29,14 @@ import File.Xflie;
 import javax.swing.JTextArea;
 
 @SuppressWarnings("serial")
-public class History extends JFrame {
+public class History extends JDialog {
 
 	private JPanel contentPane;
 	DefaultTableModel model = new DefaultTableModel();
-	static History frame = new History();
-	String path = "C:\\Users\\ADMIN\\Desktop\\File.txt";
 	static StringBuilder LichSu = new StringBuilder();
 	JTextArea textArea = new JTextArea();
-
+	History frame;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -45,6 +45,7 @@ public class History extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					frame = new History();
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);
 				} catch (Exception e) {
@@ -90,10 +91,10 @@ public class History extends JFrame {
 		btnQuayLi.setBorder(new LineBorder(Color.BLACK));
 		btnQuayLi.setBackground(Color.BLACK);
 		btnQuayLi.setBounds(326, 269, 89, 23);
-		contentPane.add(btnQuayLi);
+//		contentPane.add(btnQuayLi);
 		JLabel lblBkg = new JLabel();
 		lblBkg.setBounds(0, 0, 450, 340);
-		lblBkg.setIcon(new ImageIcon("src\\Image\\background.jpg"));
+		lblBkg.setIcon(new ImageIcon("C:\\QLKH\\Image\\background.jpg"));
 		contentPane.add(lblBkg);
 		btnQuayLi.setContentAreaFilled(false);
 //		header1.setBackground(new Color(179, 115, 52, 200));
@@ -112,7 +113,5 @@ public class History extends JFrame {
 		});
 		textArea.setText(QLKH.LichSu.toString());
 	}
-	
-	
 	
 }
